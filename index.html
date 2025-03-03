@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chandan Prasad Group</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+</head>
+
+<body class="bg-gray-100">
+    <!-- Modern Animated Navbar -->
+    <header class="fixed w-full top-0 left-0 z-50 bg-gradient-to-r from-blue-0 to-indigo-0 shadow-lg backdrop-blur-lg bg-opacity-30">
+        <div class="container mx-auto flex justify-between items-center px-6 py-4">
+            <!-- Logo with a Gradient Effect -->
+            <h1 class="text-3xl font-extrabold text-white tracking-wide transform hover:scale-105 transition-all duration-300">
+                Chandan Prasad
+            </h1>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-8 text-lg font-semibold">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="#Destinations" class="nav-link">Destinations</a>
+                <a href="#Services" class="nav-link">Services</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <nav id="mobile-menu" class="md:hidden flex flex-col items-center space-y-4 py-6 bg-indigo-00 text-white ">
+            <a href="index.html" class="nav-link mobile-nav-item">Home</a>
+            <a href="#Destinations" class="nav-link mobile-nav-item">Destinations</a>
+            <a href="#Services" class="nav-link mobile-nav-item">Services</a>
+            <a href="#contact" class="nav-link mobile-nav-item">Contact</a>
+        </nav>
+    </header>
+
+    <script>
+        // Toggle Mobile Menu
+        const menuBtn = document.getElementById("mobile-menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const navItems = document.querySelectorAll(".mobile-nav-item");
+
+        menuBtn.addEventListener("click", function () {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        // Close menu when clicking a nav item
+        navItems.forEach(item => {
+            item.addEventListener("click", function () {
+                mobileMenu.classList.add("hidden");
+            });
+        });
+    </script>
+
+    <style>
+        /* Stylish Navbar Links */
+        .nav-link {
+            padding: 0.5rem;
+            color: rgb(18, 18, 18);
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Glowing Text Effect on Hover */
+        .nav-link:hover {
+            color: #000000;
+            text-shadow: 1px 10px 30px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Smooth Navbar Slide-in Animation */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            animation: slideIn 1s ease-in-out;
+        }
+    </style>
+</body>
+
+<!-- <section id="login" class="container mx-auto py-16 text-center">
+        <h2 class="text-3xl font-bold mb-6">Login with Mobile</h2>
+        <input type="text" id="phone" placeholder="Enter mobile number" class="border p-2 rounded-md mr-2">
+        <button onclick="sendOTP()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Send
+            OTP</button>
+        <div id="recaptcha-container" class="mt-4"></div>
+
+        <div id="otp-section" style="display: none;" class="mt-6">
+            <input type="text" id="otp" placeholder="Enter OTP" class="border p-2 rounded-md mr-2">
+            <button onclick="verifyOTP()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Verify
+                OTP</button>
+        </div>
+    </section> -->
+
+<section class="relative flex justify-center items-center h-screen min-h-screen bg-cover bg-center"
+    style="background-image: url('https://plus.unsplash.com/premium_photo-1719933400890-2959b59e4632?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTk3fHxuYXR1cmV8ZW58MHwwfDB8fHww');">
+
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent"></div>
+
+    <div class="relative text-center p-10 max-w-4xl mx-auto z-10">
+        <!-- Typing Animation for Kannada Text -->
+        <h1
+            class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-500 leading-snug">
+            <span id="typing-text" class="border-r-4 border-yellow-400 pr-2"></span>
+        </h1>
+
+        <!-- Subtitle with Fade-in Animation -->
+        <h2 class="text-3xl font-semibold text-white mt-6 opacity-0 animate-fade-in">
+            Explore the World with Us
+        </h2>
+
+        <!-- Description -->
+        <p class="mt-5 text-xl font-medium text-gray-300 text-lg opacity-0 animate-fade-in delay-200">
+            Find the best travel deals and explore amazing destinations.
+        </p>
+
+        <!-- Call to Action Button -->
+        <button
+        class="mt-6 bg-gradient-to-r from-yellow-0 to-orange-200 text-white px-8 py-3 text-lg font-semibold rounded-lg shadow-lg hover:from-yellow-500 hover:to-orange-600 transform transition-all duration-300 hover:scale-105 focus:ring-4 focus:ring-yellow-300 opacity-0 animate-fade-in delay-300">
+        Book Now
+    </button>
+    
+    </div>
+</section>
+
+<style>
+    /* Cursor Blinking */
+    @keyframes blink {
+        50% {
+            border-color: transparent;
+        }
+    }
+
+    /* Fade-in Animation */
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in {
+        animation: fade-in 1.5s ease-out forwards;
+    }
+</style>
+
+<script>
+    // Typing effect with Kannada text
+    const text = "ಎಲ್ಲಾದರೂ ಇರು ಎಂತಾದರೂ ಇರು ಎಂದೆಂದಿಗೂ ನೀ ಕನ್ನಡವಾಗಿರು";
+    let i = 0;
+
+    function typeWriter() {
+        if (i < text.length) {
+            document.getElementById("typing-text").innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 120); // Adjust speed for smooth effect
+        } else {
+            document.getElementById("typing-text").classList.remove("border-r-4"); // Remove cursor after typing
+        }
+    }
+
+    window.onload = function () {
+        setTimeout(typeWriter, 500);
+    };
+</script>
+
+<!-- Popular Destinations -->
+<section id="Destinations" class="container mx-auto py-16">
+    <h2 class="text-4xl font-bold text-center mb-12 text-gray-400">Popular Destinations</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <!-- Indian Destinations -->
+        <div
+            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
+            <img src="https://plus.unsplash.com/premium_photo-1661962425238-aeb9b022a94b?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VGFqJTIwTWFoYWwlMkMlMjBBZ3JhfGVufDB8fDB8fHww"
+                alt="Taj Mahal in Agra, India" class="rounded-lg w-full h-48 object-cover">
+            <h3 class="text-xl font-semibold mt-4 text-gray-800">Taj Mahal, Agra</h3>
+            <p class="text-gray-600 mt-2">Iconic symbol of love</p>
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                aria-hidden="true">
+                <p class="text-sm">The Taj Mahal is an ivory-white marble mausoleum in Agra, India, built by Mughal
+                    Emperor Shah Jahan in memory of his wife Mumtaz Mahal.</p>
+            </div>
+        </div>
+
+        <div
+            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
+            <img src="https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fEphaXB1ciUyQyUyMFJhamFzdGhhbnxlbnwwfHwwfHx8MA%3D%3D"
+                alt="Hawa Mahal in Jaipur, Rajasthan" class="rounded-lg w-full h-48 object-cover">
+            <h3 class="text-xl font-semibold mt-4 text-gray-800">Jaipur, Rajasthan</h3>
+            <p class="text-gray-600 mt-2">The Pink City</p>
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                aria-hidden="true">
+                <p class="text-sm">Jaipur, the capital of Rajasthan, is known for its royal heritage, stunning palaces,
+                    and vibrant bazaars.</p>
+            </div>
+        </div>
+
+        <div
+            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
+            <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z29hfGVufDB8fDB8fHww"
+                alt="Beach in Goa, India" class="rounded-lg w-full h-48 object-cover">
+            <h3 class="text-xl font-semibold mt-4 text-gray-800">Goa</h3>
+            <p class="text-gray-600 mt-2">Beaches and nightlife</p>
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                aria-hidden="true">
+                <p class="text-sm">Goa is famous for its golden beaches, vibrant nightlife, and Portuguese heritage.</p>
+            </div>
+        </div>
+
+        <div
+            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
+            <img src="https://plus.unsplash.com/premium_photo-1664298917721-492bc002899b?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8TGFkYWtofGVufDB8fDB8fHww"
+                alt="Monastery in Ladakh, India" class="rounded-lg w-full h-48 object-cover">
+            <h3 class="text-xl font-semibold mt-4 text-gray-800">Ladakh</h3>
+            <p class="text-gray-600 mt-2">Himalayan adventure</p>
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                aria-hidden="true">
+                <p class="text-sm">Ladakh, known as the "Land of High Passes," is famous for its breathtaking landscapes
+                    and Buddhist monasteries.</p>
+            </div>
+        </div>
+
+        <div
+            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8S2VyYWxhfGVufDB8fDB8fHww"
+                alt="Backwaters of Kerala, India" class="rounded-lg w-full h-48 object-cover">
+            <h3 class="text-xl font-semibold mt-4 text-gray-800">Kerala</h3>
+            <p class="text-gray-600 mt-2">Backwaters and greenery</p>
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                aria-hidden="true">
+                <p class="text-sm">Kerala, often called "God's Own Country," is renowned for its serene backwaters, lush
+                    greenery, and Ayurvedic traditions.</p>
+            </div>
+        </div>
+
+        <div
+            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
+            <img src="https://images.unsplash.com/photo-1627894483216-2138af692e32?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8VmFyYW5hc2l8ZW58MHx8MHx8fDA%3D"
+                alt="Ghats of Varanasi, India" class="rounded-lg w-full h-48 object-cover">
+            <h3 class="text-xl font-semibold mt-4 text-gray-800">Varanasi</h3>
+            <p class="text-gray-600 mt-2">Spiritual capital</p>
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                aria-hidden="true">
+                <p class="text-sm">Varanasi, one of the oldest cities in the world, is a major spiritual center known
+                    for its ghats along the Ganges River.</p>
+            </div>
+        </div>
+
+        <!-- South India Destinations -->
+        <div
+            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
+            <img src="https://images.unsplash.com/photo-1620766182966-c6eb5ed2b788?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8S2FybmF0YWthfGVufDB8fDB8fHww"
+                alt="Ruins of Hampi, Karnataka" class="rounded-lg w-full h-48 object-cover">
+            <h3 class="text-xl font-semibold mt-4 text-gray-800">Hampi, Karnataka</h3>
+            <p class="text-gray-600 mt-2">Ancient ruins and temples</p>
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                aria-hidden="true">
+                <p class="text-sm">Hampi, a UNESCO World Heritage Site, is famous for its ancient ruins, temples, and
+                    the historic Vijayanagara Empire.</p>
+            </div>
+        </div>
+
+        <div
+            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
+            <img src="https://images.unsplash.com/photo-1645617936809-dd8f99e37ce1?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8TWFkdXJhaSUyQyUyMFRhbWlsJTIwTmFkdXxlbnwwfHwwfHx8MA%3D%3D"
+                alt="Meenakshi Temple in Madurai, Tamil Nadu" class="rounded-lg w-full h-48 object-cover">
+            <h3 class="text-xl font-semibold mt-4 text-gray-800">Madurai, Tamil Nadu</h3>
+            <p class="text-gray-600 mt-2">Home to Meenakshi Temple</p>
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                aria-hidden="true">
+                <p class="text-sm">Madurai is an ancient city known for the grand Meenakshi Amman Temple and its rich
+                    cultural heritage.</p>
+            </div>
+        </div>
+
+        <div
+            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
+            <img src="https://images.unsplash.com/photo-1588623598822-9ff0cd048b8a?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fFBvbmRpY2hlcnJ5fGVufDB8fDB8fHww"
+                alt="French Quarter in Pondicherry" class="rounded-lg w-full h-48 object-cover">
+            <h3 class="text-xl font-semibold mt-4 text-gray-800">Pondicherry</h3>
+            <p class="text-gray-600 mt-2">French colonial charm</p>
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                aria-hidden="true">
+                <p class="text-sm">Pondicherry, or Puducherry, blends French colonial architecture with Indian culture,
+                    offering a unique coastal experience.</p>
+            </div>
+        </div>
+
+        <div
+            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
+            <img src="https://images.unsplash.com/flagged/photo-1592544858330-7ac10a0468e5?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Q29vcmd8ZW58MHx8MHx8fDA%3D"
+                alt="Coffee plantations in Coorg, Karnataka" class="rounded-lg w-full h-48 object-cover">
+            <h3 class="text-xl font-semibold mt-4 text-gray-800">Coorg, Karnataka</h3>
+            <p class="text-gray-600 mt-2">Scenic coffee plantations</p>
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                aria-hidden="true">
+                <p class="text-sm">Coorg, also known as Kodagu, is a hill station famous for its coffee plantations,
+                    misty hills, and waterfalls.</p>
+            </div>
+        </div>
+
+        <!-- International Destinations -->
+        <div
+            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
+            <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UGFyaXMlMkMlMjBGcmFuY2V8ZW58MHx8MHx8fDA%3D"
+                alt="Eiffel Tower in Paris, France" class="rounded-lg w-full h-48 object-cover">
+            <h3 class="text-xl font-semibold mt-4 text-gray-800">Paris, France</h3>
+            <p class="text-gray-600 mt-2">City of romance</p>
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                aria-hidden="true">
+                <p class="text-sm">Paris, the capital of France, is celebrated for its art, culture, and landmarks like
+                    the Eiffel Tower.</p>
+            </div>
+        </div>
+
+        <div
+            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
+            <img src="https://plus.unsplash.com/premium_photo-1677829177642-30def98b0963?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8QmFsaSUyQyUyMEluZG9uZXNpYXxlbnwwfHwwfHx8MA%3D%3D"
+                alt="Beach in Bali, Indonesia" class="rounded-lg w-full h-48 object-cover">
+            <h3 class="text-xl font-semibold mt-4 text-gray-800">Bali, Indonesia</h3>
+            <p class="text-gray-600 mt-2">Tropical paradise</p>
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                aria-hidden="true">
+                <p class="text-sm">Bali is an Indonesian island known for its lush landscapes, beaches, and vibrant
+                    Hindu culture.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="text-center mt-10">
+    <a href="destinations.html" class="text-blue-600 hover:underline text-lg">Explore More Destinations</a> <!-- Add link to destinations page -->
+</div>
+</section>
+
+<section id="Services" class="bg-gray-200 py-16">
+    <h2 class="text-3xl font-bold text-center mb-10">Our Services</h2>
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div
+            class="bg-white p-6 shadow-lg rounded-lg text-center card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100">
+            <img src="https://images.unsplash.com/photo-1587019158091-1a103c5dd17f?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZmxpZ2h0fGVufDB8fDB8fHww"
+                alt="">
+            <h3 class="text-xl font-semibold">Flight Booking</h3>
+            <p class="mt-2">Best flight deals for all destinations.</p>
+        </div>
+        <div
+            class="bg-white p-6 shadow-lg rounded-lg text-center card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100">
+            <img src="https://images.unsplash.com/photo-1567552379232-c32f3d41d353?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8SG90ZWwlMjBSZXNlcnZhdGlvbnN8ZW58MHx8MHx8fDA%3D"
+                alt="">
+            <h3 class="text-xl font-semibold">Hotel Reservations</h3>
+            <p class="mt-2">Affordable and luxury stays.</p>
+        </div>
+        <div
+            class="bg-white p-6 shadow-lg rounded-lg text-center card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100">
+            <img src="https://images.unsplash.com/photo-1482332486572-10fff1bedfbe?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8VG91cnxlbnwwfHwwfHx8MA%3D%3D"
+                alt="">
+            <h3 class="text-xl font-semibold">Tour Packages</h3>
+            <p class="mt-2">Customized travel experiences.</p>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="container mx-auto py-16 px-6 text-center">
+    <h2 class="text-4xl font-bold mb-6 text-gray-800">Contact Us</h2>
+    <p class="mb-6 text-lg text-gray-600">Have questions? Reach out to us!</p>
+
+    <form class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
+        <input type="text" placeholder="Your Name" 
+            class="border border-gray-300 p-3 rounded-md w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        
+        <input type="email" placeholder="Your Email" 
+            class="border border-gray-300 p-3 rounded-md w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        
+        <textarea placeholder="Your Message" rows="5" 
+            class="border border-gray-300 p-3 rounded-md w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+
+        <button type="submit" 
+            class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105 focus:ring-4 focus:ring-blue-300">
+            Send Message
+        </button>
+    </form>
+</section>
+
+<footer class="bg-blue-300 text-white text-center p-4 mt-10">
+    <p>&copy; 2025 Chandan Travel. All rights reserved.</p>
+</footer>
+</body>
+
+</html>
+>>>>>>> ee755c0 (Initial commit)
