@@ -14,10 +14,12 @@
 
 <body class="bg-gray-100">
     <!-- Modern Animated Navbar -->
-    <header class="fixed w-full top-0 left-0 z-50 bg-gradient-to-r from-blue-0 to-indigo-0 shadow-lg backdrop-blur-lg bg-opacity-30">
+    <header
+        class="fixed w-full top-0 left-0 z-50 bg-gradient-to-r from-blue-0 to-indigo-0 shadow-lg backdrop-blur-lg bg-opacity-30">
         <div class="container mx-auto flex justify-between items-center px-6 py-4">
             <!-- Logo with a Gradient Effect -->
-            <h1 class="text-3xl font-extrabold text-white tracking-wide transform hover:scale-105 transition-all duration-300">
+            <h1
+                class="text-3xl font-extrabold text-white tracking-wide transform hover:scale-105 transition-all duration-300">
                 Chandan Prasad
             </h1>
 
@@ -37,8 +39,8 @@
             </button>
         </div>
 
-        <!-- Mobile Navigation -->
-        <nav id="mobile-menu" class="md:hidden flex flex-col items-center space-y-4 py-6 bg-indigo-00 text-white ">
+        <!-- Mobile Navigation (Hidden by Default) -->
+        <nav id="mobile-menu" class="md:hidden hidden flex flex-col items-center space-y-4 py-6 bg-indigo-00 text-white">
             <a href="index.html" class="nav-link mobile-nav-item">Home</a>
             <a href="#Destinations" class="nav-link mobile-nav-item">Destinations</a>
             <a href="#Services" class="nav-link mobile-nav-item">Services</a>
@@ -68,15 +70,15 @@
         /* Stylish Navbar Links */
         .nav-link {
             padding: 0.5rem;
-            color: rgb(18, 18, 18);
+            color: rgb(89, 89, 89);
             font-weight: bold;
             transition: all 0.3s ease-in-out;
         }
 
         /* Glowing Text Effect on Hover */
         .nav-link:hover {
-            color: #000000;
-            text-shadow: 1px 10px 30px rgba(255, 255, 255, 0.8);
+            color: #070707;
+            text-shadow: 1px 10px 30px rgba(198, 90, 13, 0.8);
         }
 
         /* Smooth Navbar Slide-in Animation */
@@ -85,6 +87,7 @@
                 opacity: 0;
                 transform: translateY(-20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
