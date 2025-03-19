@@ -1,87 +1,40 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chandan Prasad Group</title>
+    <title>Chandan Prasad Travels - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-
-</head>
-
-<body class="bg-gray-100">
-    <!-- Modern Animated Navbar -->
-    <header
-        class="fixed w-full top-0 left-0 z-50 bg-gradient-to-r from-blue-0 to-indigo-0 shadow-lg backdrop-blur-lg bg-opacity-30">
-        <div class="container mx-auto flex justify-between items-center px-6 py-4">
-            <!-- Logo with a Gradient Effect -->
-            <h1
-                class="text-3xl font-extrabold text-white tracking-wide transform hover:scale-105 transition-all duration-300">
-                Chandan Prasad
-            </h1>
-
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex space-x-8 text-lg font-semibold">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="#Destinations" class="nav-link">Destinations</a>
-                <a href="#Services" class="nav-link">Services</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </nav>
-
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-        </div>
-
-        <!-- Mobile Navigation (Hidden by Default) -->
-        <nav id="mobile-menu" class="md:hidden hidden flex flex-col items-center space-y-4 py-6 bg-indigo-00 text-white">
-            <a href="index.html" class="nav-link mobile-nav-item">Home</a>
-            <a href="#Destinations" class="nav-link mobile-nav-item">Destinations</a>
-            <a href="#Services" class="nav-link mobile-nav-item">Services</a>
-            <a href="#contact" class="nav-link mobile-nav-item">Contact</a>
-        </nav>
-    </header>
-
-    <script>
-        // Toggle Mobile Menu
-        const menuBtn = document.getElementById("mobile-menu-btn");
-        const mobileMenu = document.getElementById("mobile-menu");
-        const navItems = document.querySelectorAll(".mobile-nav-item");
-
-        menuBtn.addEventListener("click", function () {
-            mobileMenu.classList.toggle("hidden");
-        });
-
-        // Close menu when clicking a nav item
-        navItems.forEach(item => {
-            item.addEventListener("click", function () {
-                mobileMenu.classList.add("hidden");
-            });
-        });
-    </script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Stylish Navbar Links */
+        /* Base Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: transparent;
+            color: #333;
+        }
+
+        /* Shared CSS (Navbar and Footer) - Enhanced */
+        .nav-gradient {
+            background: transparent;
+        }
+
         .nav-link {
             padding: 0.5rem;
-            color: rgb(89, 89, 89);
+            color: white;
             font-weight: bold;
             transition: all 0.3s ease-in-out;
         }
 
-        /* Glowing Text Effect on Hover */
         .nav-link:hover {
-            color: #070707;
-            text-shadow: 1px 10px 30px rgba(198, 90, 13, 0.8);
+            color: #F97316;
+            text-shadow: 1px 10px 30px rgba(249, 115, 22, 0.8);
+            transform: scale(1.1);
         }
 
-        /* Smooth Navbar Slide-in Animation */
+        /* Existing Animations (Preserved) */
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -94,324 +47,498 @@
             }
         }
 
+        @keyframes slideInBottom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomInOut {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes rollIn {
+            from {
+                opacity: 0;
+                transform: translateX(-100px) rotate(-360deg);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0) rotate(0deg);
+            }
+        }
+
+        @keyframes wiggle {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(5deg);
+            }
+
+            75% {
+                transform: rotate(-5deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulseSpin {
+            0% {
+                transform: scale(1) rotate(0deg);
+            }
+
+            50% {
+                transform: scale(1.1) rotate(5deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(59, 130, 246, 1);
+            }
+
+            100% {
+                box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+            }
+        }
+
+        /* Animation Classes (Preserved) */
+        .animate-slide-in-bottom {
+            animation: slideInBottom 1s ease-out forwards;
+        }
+
+        .animate-zoom-in-out {
+            animation: zoomInOut 1s ease-out;
+        }
+
+        .animate-roll-in {
+            animation: rollIn 0.8s ease-out forwards;
+        }
+
+        .animate-wiggle {
+            animation: wiggle 1s infinite;
+        }
+
+        .animate-slide-in-left {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        .animate-slide-in-right {
+            animation: slideInRight 0.8s ease-out forwards;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .animate-pulse-spin {
+            animation: pulseSpin 2s infinite;
+        }
+
+        .delay-100 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-300 {
+            animation-delay: 0.3s;
+        }
+
+        .delay-400 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-500 {
+            animation-delay: 0.5s;
+        }
+
+        .delay-600 {
+            animation-delay: 0.6s;
+        }
+
+        .delay-700 {
+            animation-delay: 0.7s;
+        }
+
+        .delay-800 {
+            animation-delay: 0.8s;
+        }
+
+        .admin-btn:hover {
+            animation: glow 1.5s infinite;
+        }
+
+        .animate-wiggle:hover {
+            animation: none;
+        }
+
+        /* UI/UX Enhancements with Transparency */
         header {
             animation: slideIn 1s ease-in-out;
+            box-shadow: none;
+        }
+
+        #mobile-menu {
+            background: transparent;
+        }
+
+        .hero-section {
+            position: relative;
+        }
+
+        .hero-section .relative {
+            background: transparent;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: none;
+        }
+
+        #hero-button {
+            background: linear-gradient(90deg, #F97316, #FBBF24);
+        }
+
+        #hero-button:hover {
+            background: linear-gradient(90deg, #FBBF24, #F97316);
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.5);
+        }
+
+        #video-map {
+            background: transparent;
+            padding: 2rem;
+            border-radius: 1rem;
+        }
+
+        #travel-video,
+        #map-iframe {
+            border: none;
+        }
+
+        footer {
+            background: transparent;
+        }
+
+        footer a {
+            color: #F97316;
+        }
+
+        footer a:hover {
+            color: #FBBF24;
+        }
+
+        .admin-btn {
+            background: linear-gradient(90deg, #F97316, #FBBF24);
+            color: white;
+        }
+
+        .admin-btn:hover {
+            background: linear-gradient(90deg, #FBBF24, #F97316);
+            transform: scale(1.1);
+        }
+
+        /* Featured Destinations Styles */
+        #featured-destinations {
+            background: transparent;
+        }
+
+        .destination-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .destination-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .destination-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+        }
+
+        .destination-card h3 {
+            color: white;
+            font-weight: bold;
+        }
+
+        .destination-card p {
+            color: #D1D5DB;
+        }
+
+        .destination-card .price {
+            color: #F97316;
+            font-weight: bold;
+        }
+
+        .destination-card button {
+            background: linear-gradient(90deg, #F97316, #FBBF24);
+        }
+
+        .destination-card button:hover {
+            background: linear-gradient(90deg, #FBBF24, #F97316);
+            transform: scale(1.05);
         }
     </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <header class="nav-gradient fixed w-full top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-white flex items-center space-x-2">
+                <i class="fas fa-plane text-orange-500"></i>
+                <span>ChandanPrasad Travels</span>
+            </a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-white hover:text-orange-300 transition">Home</a>
+                <a href="destinations.html" class="text-white hover:text-orange-300 transition">Destinations</a>
+                <a href="services.html" class="text-white hover:text-orange-300 transition">Services</a>
+                <a href="gallery.html" class="text-white hover:text-orange-300 transition">Gallery</a>
+                <a href="bookings.html" class="text-white hover:text-orange-300 transition">Bookings</a>
+                <a href="contact.html" class="text-white hover:text-orange-300 transition">Contact</a>
+            </nav>
+            <button id="mobile-menu-btn" class="md:hidden text-white">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="hidden md:hidden bg-blue-800 text-white p-4">
+            <a href="index.html" class="block py-2 hover:text-orange-300">Home</a>
+            <a href="destinations.html" class="block py-2 hover:text-orange-300">Destinations</a>
+            <a href="services.html" class="block py-2 hover:text-orange-300">Services</a>
+            <a href="gallery.html" class="block py-2 hover:text-orange-300">Gallery</a>
+            <a href="bookings.html" class="block py-2 text-orange-300 ">Bookings</a>
+            <a href="contact.html" class="block py-2 hover:text-orange-300">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative flex justify-center items-center h-screen min-h-screen bg-cover bg-center hero-section">
+        <video class="absolute inset-0 w-full h-full object-cover z-0" autoplay loop muted playsinline id="hero-video">
+            <source src="https://cdn.pixabay.com/video/2017/06/05/9584-220312371_large.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent"></div>
+        <div class="relative text-center p-10 max-w-4xl mx-auto z-10">
+            <h1
+                class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-500 leading-snug">
+                <span id="hero-title" class="border-r-4 border-yellow-400 pr-2"></span>
+            </h1>
+            <h2 id="hero-subtitle" class="text-3xl font-semibold text-white mt-6 opacity-0 animate-fade-in"></h2>
+            <p id="hero-text"
+                class="mt-5 text-xl font-medium text-gray-300 text-lg opacity-0 animate-fade-in delay-200"></p>
+            <button id="hero-button"
+                class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 transform hover:scale-125 hover:shadow-2xl animate-pulse-spin hover:animate-none mt-8 admin-btn">
+                Book Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Featured Destinations Section -->
+    <section id="featured-destinations" class="container mx-auto py-16 px-4">
+        <h2 class="text-4xl font-bold text-black text-center mb-12 animate-fade-in">Featured Destinations</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8" id="destination-container"></div>
+    </section>
+
+    <!-- Video and Map Section -->
+    <section id="video-map" class="container mx-auto py-16 px-4">
+        <div class="flex flex-col md:flex-row justify-between items-start gap-8">
+            <div class="w-full md:w-1/2 text-center animate-slide-in-left">
+                <h2 id="video-title" class="text-4xl font-bold mb-8 text-black">Travel Video</h2>
+                <video controls autoplay muted class="w-full rounded-lg shadow-lg" id="travel-video">
+                    <source src="videos/video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="w-full md:w-1/2 text-center animate-slide-in-right">
+                <h3 id="map-title" class="text-4xl font-bold mb-4 text-black">Find Us Here</h3>
+                <iframe id="map-iframe" class="w-full h-[450px] rounded-lg shadow-lg"
+                    src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d4900.789663210272!2d76.49217071156957!3d15.509051154126839!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTXCsDMwJzMyLjYiTiA3NsKwMjknNDEuMSJF!5e1!3m2!1sen!2sin!4v1741113847602!5m2!1sen!2sin"
+                    style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 text-center p-6 mt-10 animate-slide-in-bottom">
+        <div class="container mx-auto">
+            <h3 class="text-lg font-semibold animate-zoom-in-out">ChandanPrasad Travel</h3>
+            <p class="mt-2 animate-fade-in delay-100">© 2025 ChandanPrasad Travel. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4 animate-roll-in delay-200">
+                <a href="#"
+                    class="hover:text-white transition duration-300 transform hover:scale-150 hover:rotate-360 animate-wiggle"><i
+                        class="fab fa-facebook-f"></i></a>
+                <a href="#"
+                    class="hover:text-white transition duration-300 transform hover:scale-150 hover:rotate-360 animate-wiggle delay-300"><i
+                        class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/mr_chandan_prasad_indian?igsh=MXU1MWVxazQ4cXcwcQ=="
+                    class="hover:text-white transition duration-300 transform hover:scale-150 hover:rotate-360 animate-wiggle delay-400"><i
+                        class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/mr-chandan-prasad1947"
+                    class="hover:text-white transition duration-300 transform hover:scale-150 hover:rotate-360 animate-wiggle delay-500"><i
+                        class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p class="text-sm mt-4 animate-slide-in-left delay-600">📍 Location: Head Office, Address, Kesarhatti,
+                Karnataka, India</p>
+            <p class="text-sm animate-slide-in-right delay-700">📞 Contact: +91 8296724981 | ✉ Email: <a
+                    href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                    data-cfemail="5c35323a331c3f343d32383d322c2e3d2f3d38282e3d2a3930723f3331">[email protected]</a></p>
+            <div class="mt-4 animate-fade-in delay-800">
+                <a href="admin.html"
+                    class="inline-block text-blue-400 hover:text-blue-600 transition-all duration-500 transform hover:scale-125 hover:shadow-2xl animate-pulse-spin bg-blue-900 bg-opacity-30 px-4 py-2 rounded-lg admin-btn">
+                    Admin Login
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById("mobile-menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const navItems = document.querySelectorAll(".mobile-nav-item");
+        menuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+        navItems.forEach(item => item.addEventListener("click", () => mobileMenu.classList.add("hidden")));
+
+        // Load Home Content from localStorage
+        function loadHomeContent() {
+            const homeContent = JSON.parse(localStorage.getItem('homeContent')) || {
+                title: "ಎಲ್ಲಾದರೂ ಇರು ಎಂತಾದರೂ ಇರು ಎಂದೆಂದಿಗೂ ನೀ ಕನ್ನಡವಾಗಿರು",
+                subtitle: "Let us guide you through a world of wonder <br> your dream escape starts here.",
+                text: "Find the best travel deals and explore amazing destinations.",
+                buttonText: "Book Now",
+                heroVideo: "https://cdn.pixabay.com/video/2017/06/05/9584-220312371_large.mp4",
+                videoTitle: "Travel Video",
+                travelVideo: "videos/video.mp4",
+                mapTitle: "Find Us Here",
+                mapUrl: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d4900.789663210272!2d76.49217071156957!3d15.509051154126839!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTXCsDMwJzMyLjYiTiA3NsKwMjknNDEuMSJF!5e1!3m2!1sen!2sin!4v1741113847602!5m2!1sen!2sin"
+            };
+            let i = 0;
+            const titleElement = document.getElementById("hero-title");
+            function typeWriter() {
+                if (i < homeContent.title.length) {
+                    titleElement.innerHTML += homeContent.title.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 120);
+                } else {
+                    titleElement.classList.remove("border-r-4");
+                }
+            }
+            titleElement.innerHTML = "";
+            setTimeout(typeWriter, 500);
+            document.getElementById("hero-subtitle").innerHTML = homeContent.subtitle;
+            document.getElementById("hero-text").innerHTML = homeContent.text;
+            document.getElementById("hero-button").innerHTML = homeContent.buttonText;
+            document.getElementById("hero-video").querySelector("source").src = homeContent.heroVideo;
+            document.getElementById("hero-video").load();
+            document.getElementById("video-title").innerHTML = homeContent.videoTitle;
+            document.getElementById("travel-video").querySelector("source").src = homeContent.travelVideo;
+            document.getElementById("travel-video").load();
+            document.getElementById("map-title").innerHTML = homeContent.mapTitle;
+            document.getElementById("map-iframe").src = homeContent.mapUrl;
+        }
+
+        // Load Featured Destinations from localStorage
+        function loadFeaturedDestinations() {
+            const destinations = JSON.parse(localStorage.getItem('destinations')) || [];
+            const container = document.getElementById('destination-container');
+            const featuredDestinations = destinations.slice(0, Math.max(5, destinations.length)); // Show at least 5 or all if fewer
+            featuredDestinations.forEach((dest, index) => {
+                const animationClass = index % 3 === 0 ? 'animate-slide-in-left' : index % 3 === 1 ? 'animate-slide-in-bottom' : 'animate-slide-in-right';
+                const delayClass = `delay-${(index % 3 + 1) * 200}`;
+                container.innerHTML += `
+                    <div class="destination-card ${animationClass} ${delayClass}">
+                        <img src="${dest.image || 'https://via.placeholder.com/300x200?text=' + dest.name}" alt="${dest.name}">
+                        <h3 class="text-xl mt-4">${dest.name}</h3>
+                        <p class="mt-2">${dest.desc || 'No description available'}</p>
+                        <p class="price mt-2">₹${(dest.price || 0).toLocaleString()}</p>
+                        <button class="mt-4 px-4 py-2 text-white rounded-md font-medium transition-all">Book Now</button>
+                    </div>`;
+            });
+        }
+
+        // Initialize Page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHomeContent();
+            loadFeaturedDestinations();
+        });
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'92287722982312df',t:'MTc0MjM0MDA3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
 </body>
 
-<!-- <section id="login" class="container mx-auto py-16 text-center">
-        <h2 class="text-3xl font-bold mb-6">Login with Mobile</h2>
-        <input type="text" id="phone" placeholder="Enter mobile number" class="border p-2 rounded-md mr-2">
-        <button onclick="sendOTP()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Send
-            OTP</button>
-        <div id="recaptcha-container" class="mt-4"></div>
-
-        <div id="otp-section" style="display: none;" class="mt-6">
-            <input type="text" id="otp" placeholder="Enter OTP" class="border p-2 rounded-md mr-2">
-            <button onclick="verifyOTP()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Verify
-                OTP</button>
-        </div>
-    </section> -->
-
-<section class="relative flex justify-center items-center h-screen min-h-screen bg-cover bg-center"
-    style="background-image: url('https://plus.unsplash.com/premium_photo-1719933400890-2959b59e4632?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTk3fHxuYXR1cmV8ZW58MHwwfDB8fHww');">
-
-    <!-- Gradient Overlay -->
-    <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent"></div>
-
-    <div class="relative text-center p-10 max-w-4xl mx-auto z-10">
-        <!-- Typing Animation for Kannada Text -->
-        <h1
-            class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-500 leading-snug">
-            <span id="typing-text" class="border-r-4 border-yellow-400 pr-2"></span>
-        </h1>
-
-        <!-- Subtitle with Fade-in Animation -->
-        <h2 class="text-3xl font-semibold text-white mt-6 opacity-0 animate-fade-in">
-            Explore the World with Us
-        </h2>
-
-        <!-- Description -->
-        <p class="mt-5 text-xl font-medium text-gray-300 text-lg opacity-0 animate-fade-in delay-200">
-            Find the best travel deals and explore amazing destinations.
-        </p>
-
-        <!-- Call to Action Button -->
-        <button
-        class="mt-6 bg-gradient-to-r from-yellow-0 to-orange-200 text-white px-8 py-3 text-lg font-semibold rounded-lg shadow-lg hover:from-yellow-500 hover:to-orange-600 transform transition-all duration-300 hover:scale-105 focus:ring-4 focus:ring-yellow-300 opacity-0 animate-fade-in delay-300">
-        Book Now
-    </button>
-    
-    </div>
-</section>
-
-<style>
-    /* Cursor Blinking */
-    @keyframes blink {
-        50% {
-            border-color: transparent;
-        }
-    }
-
-    /* Fade-in Animation */
-    @keyframes fade-in {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .animate-fade-in {
-        animation: fade-in 1.5s ease-out forwards;
-    }
-</style>
-
-<script>
-    // Typing effect with Kannada text
-    const text = "ಎಲ್ಲಾದರೂ ಇರು ಎಂತಾದರೂ ಇರು ಎಂದೆಂದಿಗೂ ನೀ ಕನ್ನಡವಾಗಿರು";
-    let i = 0;
-
-    function typeWriter() {
-        if (i < text.length) {
-            document.getElementById("typing-text").innerHTML += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, 120); // Adjust speed for smooth effect
-        } else {
-            document.getElementById("typing-text").classList.remove("border-r-4"); // Remove cursor after typing
-        }
-    }
-
-    window.onload = function () {
-        setTimeout(typeWriter, 500);
-    };
-</script>
-
-<!-- Popular Destinations -->
-<section id="Destinations" class="container mx-auto py-16">
-    <h2 class="text-4xl font-bold text-center mb-12">Popular Destinations</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        <!-- Indian Destinations -->
-        <div
-            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
-            <img src="https://plus.unsplash.com/premium_photo-1661962425238-aeb9b022a94b?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VGFqJTIwTWFoYWwlMkMlMjBBZ3JhfGVufDB8fDB8fHww"
-                alt="Taj Mahal in Agra, India" class="rounded-lg w-full h-48 object-cover">
-            <h3 class="text-xl font-semibold mt-4 text-gray-800">Taj Mahal, Agra</h3>
-            <p class="text-gray-600 mt-2">Iconic symbol of love</p>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
-                aria-hidden="true">
-                <p class="text-sm">The Taj Mahal is an ivory-white marble mausoleum in Agra, India, built by Mughal
-                    Emperor Shah Jahan in memory of his wife Mumtaz Mahal.</p>
-            </div>
-        </div>
-
-        <div
-            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
-            <img src="https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fEphaXB1ciUyQyUyMFJhamFzdGhhbnxlbnwwfHwwfHx8MA%3D%3D"
-                alt="Hawa Mahal in Jaipur, Rajasthan" class="rounded-lg w-full h-48 object-cover">
-            <h3 class="text-xl font-semibold mt-4 text-gray-800">Jaipur, Rajasthan</h3>
-            <p class="text-gray-600 mt-2">The Pink City</p>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
-                aria-hidden="true">
-                <p class="text-sm">Jaipur, the capital of Rajasthan, is known for its royal heritage, stunning palaces,
-                    and vibrant bazaars.</p>
-            </div>
-        </div>
-
-        <div
-            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
-            <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z29hfGVufDB8fDB8fHww"
-                alt="Beach in Goa, India" class="rounded-lg w-full h-48 object-cover">
-            <h3 class="text-xl font-semibold mt-4 text-gray-800">Goa</h3>
-            <p class="text-gray-600 mt-2">Beaches and nightlife</p>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
-                aria-hidden="true">
-                <p class="text-sm">Goa is famous for its golden beaches, vibrant nightlife, and Portuguese heritage.</p>
-            </div>
-        </div>
-
-        <div
-            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
-            <img src="https://plus.unsplash.com/premium_photo-1664298917721-492bc002899b?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8TGFkYWtofGVufDB8fDB8fHww"
-                alt="Monastery in Ladakh, India" class="rounded-lg w-full h-48 object-cover">
-            <h3 class="text-xl font-semibold mt-4 text-gray-800">Ladakh</h3>
-            <p class="text-gray-600 mt-2">Himalayan adventure</p>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
-                aria-hidden="true">
-                <p class="text-sm">Ladakh, known as the "Land of High Passes," is famous for its breathtaking landscapes
-                    and Buddhist monasteries.</p>
-            </div>
-        </div>
-
-        <div
-            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
-            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8S2VyYWxhfGVufDB8fDB8fHww"
-                alt="Backwaters of Kerala, India" class="rounded-lg w-full h-48 object-cover">
-            <h3 class="text-xl font-semibold mt-4 text-gray-800">Kerala</h3>
-            <p class="text-gray-600 mt-2">Backwaters and greenery</p>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
-                aria-hidden="true">
-                <p class="text-sm">Kerala, often called "God's Own Country," is renowned for its serene backwaters, lush
-                    greenery, and Ayurvedic traditions.</p>
-            </div>
-        </div>
-
-        <div
-            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
-            <img src="https://images.unsplash.com/photo-1627894483216-2138af692e32?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8VmFyYW5hc2l8ZW58MHx8MHx8fDA%3D"
-                alt="Ghats of Varanasi, India" class="rounded-lg w-full h-48 object-cover">
-            <h3 class="text-xl font-semibold mt-4 text-gray-800">Varanasi</h3>
-            <p class="text-gray-600 mt-2">Spiritual capital</p>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
-                aria-hidden="true">
-                <p class="text-sm">Varanasi, one of the oldest cities in the world, is a major spiritual center known
-                    for its ghats along the Ganges River.</p>
-            </div>
-        </div>
-
-        <!-- South India Destinations -->
-        <div
-            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
-            <img src="https://images.unsplash.com/photo-1620766182966-c6eb5ed2b788?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8S2FybmF0YWthfGVufDB8fDB8fHww"
-                alt="Ruins of Hampi, Karnataka" class="rounded-lg w-full h-48 object-cover">
-            <h3 class="text-xl font-semibold mt-4 text-gray-800">Hampi, Karnataka</h3>
-            <p class="text-gray-600 mt-2">Ancient ruins and temples</p>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
-                aria-hidden="true">
-                <p class="text-sm">Hampi, a UNESCO World Heritage Site, is famous for its ancient ruins, temples, and
-                    the historic Vijayanagara Empire.</p>
-            </div>
-        </div>
-
-        <div
-            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
-            <img src="https://images.unsplash.com/photo-1645617936809-dd8f99e37ce1?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8TWFkdXJhaSUyQyUyMFRhbWlsJTIwTmFkdXxlbnwwfHwwfHx8MA%3D%3D"
-                alt="Meenakshi Temple in Madurai, Tamil Nadu" class="rounded-lg w-full h-48 object-cover">
-            <h3 class="text-xl font-semibold mt-4 text-gray-800">Madurai, Tamil Nadu</h3>
-            <p class="text-gray-600 mt-2">Home to Meenakshi Temple</p>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
-                aria-hidden="true">
-                <p class="text-sm">Madurai is an ancient city known for the grand Meenakshi Amman Temple and its rich
-                    cultural heritage.</p>
-            </div>
-        </div>
-
-        <div
-            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
-            <img src="https://images.unsplash.com/photo-1588623598822-9ff0cd048b8a?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fFBvbmRpY2hlcnJ5fGVufDB8fDB8fHww"
-                alt="French Quarter in Pondicherry" class="rounded-lg w-full h-48 object-cover">
-            <h3 class="text-xl font-semibold mt-4 text-gray-800">Pondicherry</h3>
-            <p class="text-gray-600 mt-2">French colonial charm</p>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
-                aria-hidden="true">
-                <p class="text-sm">Pondicherry, or Puducherry, blends French colonial architecture with Indian culture,
-                    offering a unique coastal experience.</p>
-            </div>
-        </div>
-
-        <div
-            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
-            <img src="https://images.unsplash.com/flagged/photo-1592544858330-7ac10a0468e5?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Q29vcmd8ZW58MHx8MHx8fDA%3D"
-                alt="Coffee plantations in Coorg, Karnataka" class="rounded-lg w-full h-48 object-cover">
-            <h3 class="text-xl font-semibold mt-4 text-gray-800">Coorg, Karnataka</h3>
-            <p class="text-gray-600 mt-2">Scenic coffee plantations</p>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
-                aria-hidden="true">
-                <p class="text-sm">Coorg, also known as Kodagu, is a hill station famous for its coffee plantations,
-                    misty hills, and waterfalls.</p>
-            </div>
-        </div>
-
-        <!-- International Destinations -->
-        <div
-            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
-            <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UGFyaXMlMkMlMjBGcmFuY2V8ZW58MHx8MHx8fDA%3D"
-                alt="Eiffel Tower in Paris, France" class="rounded-lg w-full h-48 object-cover">
-            <h3 class="text-xl font-semibold mt-4 text-gray-800">Paris, France</h3>
-            <p class="text-gray-600 mt-2">City of romance</p>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
-                aria-hidden="true">
-                <p class="text-sm">Paris, the capital of France, is celebrated for its art, culture, and landmarks like
-                    the Eiffel Tower.</p>
-            </div>
-        </div>
-
-        <div
-            class="relative bg-white p-4 shadow-lg rounded-lg card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100 group">
-            <img src="https://plus.unsplash.com/premium_photo-1677829177642-30def98b0963?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8QmFsaSUyQyUyMEluZG9uZXNpYXxlbnwwfHwwfHx8MA%3D%3D"
-                alt="Beach in Bali, Indonesia" class="rounded-lg w-full h-48 object-cover">
-            <h3 class="text-xl font-semibold mt-4 text-gray-800">Bali, Indonesia</h3>
-            <p class="text-gray-600 mt-2">Tropical paradise</p>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-center rounded-lg p-4 opacity-0 transform scale-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
-                aria-hidden="true">
-                <p class="text-sm">Bali is an Indonesian island known for its lush landscapes, beaches, and vibrant
-                    Hindu culture.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="text-center mt-10">
-    <a href="destinations.html" class="text-blue-600 hover:underline text-lg">Explore More Destinations</a> <!-- Add link to destinations page -->
-</div>
-</section>
-
-<section id="Services" class="bg-gray-200 py-16">
-    <h2 class="text-3xl font-bold text-center mb-10">Our Services</h2>
-    <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div
-            class="bg-white p-6 shadow-lg rounded-lg text-center card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100">
-            <img src="https://images.unsplash.com/photo-1587019158091-1a103c5dd17f?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZmxpZ2h0fGVufDB8fDB8fHww"
-                alt="">
-            <h3 class="text-xl font-semibold">Flight Booking</h3>
-            <p class="mt-2">Best flight deals for all destinations.</p>
-        </div>
-        <div
-            class="bg-white p-6 shadow-lg rounded-lg text-center card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100">
-            <img src="https://images.unsplash.com/photo-1567552379232-c32f3d41d353?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8SG90ZWwlMjBSZXNlcnZhdGlvbnN8ZW58MHx8MHx8fDA%3D"
-                alt="">
-            <h3 class="text-xl font-semibold">Hotel Reservations</h3>
-            <p class="mt-2">Affordable and luxury stays.</p>
-        </div>
-        <div
-            class="bg-white p-6 shadow-lg rounded-lg text-center card-hover transform transition-transform duration-300 hover:scale-105 animate-fade-up delay-100">
-            <img src="https://images.unsplash.com/photo-1482332486572-10fff1bedfbe?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8VG91cnxlbnwwfHwwfHx8MA%3D%3D"
-                alt="">
-            <h3 class="text-xl font-semibold">Tour Packages</h3>
-            <p class="mt-2">Customized travel experiences.</p>
-        </div>
-    </div>
-</section>
-
-<section id="contact" class="container mx-auto py-16 px-6 text-center">
-    <h2 class="text-4xl font-bold mb-6 text-gray-800">Contact Us</h2>
-    <p class="mb-6 text-lg text-gray-600">Have questions? Reach out to us!</p>
-
-    <form class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
-        <input type="text" placeholder="Your Name" 
-            class="border border-gray-300 p-3 rounded-md w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        
-        <input type="email" placeholder="Your Email" 
-            class="border border-gray-300 p-3 rounded-md w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        
-        <textarea placeholder="Your Message" rows="5" 
-            class="border border-gray-300 p-3 rounded-md w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-
-        <button type="submit" 
-            class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105 focus:ring-4 focus:ring-blue-300">
-            Send Message
-        </button>
-    </form>
-</section>
-
-<footer class="bg-blue-300 text-white text-center p-4 mt-10">
-    <p>&copy; 2025 Chandan Travel. All rights reserved.</p>
-</footer>
-
-</body>
 </html>
