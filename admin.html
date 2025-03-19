@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ChandanPrasad Travels</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1E3A8A, #A78BFA);
+        }
+
+        .sidebar {
+            background: linear-gradient(to bottom, #1E3A8A, #60A5FA);
+            color: white;
+        }
+
+        .menu-item {
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .menu-item.active {
+            background: #F97316;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #F97316, #FBBF24);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.5);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .input-field {
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            ring: 2px solid #F97316;
+            border-color: #F97316;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen text-gray-800">
+    <!-- Login Screen -->
+    <div id="login-screen" class="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-90">
+        <div class="card p-8 rounded-xl shadow-2xl w-full max-w-md fade-in">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800">Admin Login</h2>
+                <p class="text-gray-600 mt-2">ChandanPrasad Travels Dashboard</p>
+            </div>
+            <div class="mb-6">
+                <label for="admin-username" class="block text-gray-700 font-semibold mb-2">Username</label>
+                <input type="text" id="admin-username"
+                    class="input-field border p-3 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    placeholder="Enter username">
+            </div>
+            <div class="mb-6">
+                <label for="admin-password" class="block text-gray-700 font-semibold mb-2">Password</label>
+                <input type="password" id="admin-password"
+                    class="input-field border p-3 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    placeholder="••••••••">
+            </div>
+            <button id="login-btn" class="btn-primary text-white font-bold py-3 px-4 rounded-md w-full">Sign In</button>
+            <div id="login-error" class="mt-4 text-red-500 text-center hidden">Invalid username or password.</div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="hidden">
+        <nav class="bg-gradient-to-r from-blue-900 to-purple-800 shadow-md fixed w-full z-10 text-white">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <button id="sidebar-toggle" class="text-white"><i class="fas fa-bars text-2xl"></i></button>
+                    <a href="#" class="text-xl font-bold"><span class="text-orange-400">ChandanPrasad</span> Admin</a>
+                    <a href="index.html" class="btn-primary text-white px-4 py-2 rounded-md"><i
+                            class="fas fa-home mr-2"></i> Home</a>
+                </div>
+                <div class="relative">
+                    <button id="profile-menu-button" class="flex items-center">
+                        <span class="mr-2 text-sm font-medium hidden md:block">Admin</span>
+                        <img class="h-8 w-8 rounded-full" src="https://randomuser.me/api/portraits/men/1.jpg"
+                            alt="Profile">
+                    </button>
+                    <div id="profile-dropdown"
+                        class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden text-gray-800">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
+                        <a href="#" id="logout-btn" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <div class="flex h-screen pt-16">
+            <div id="sidebar" class="w-64 fixed h-full overflow-y-auto transition-all duration-300">
+                <div class="py-4">
+                    <ul class="mt-4">
+                        <li><a href="#" data-content="dashboard-content"
+                                class="menu-item active flex items-center px-4 py-3"><i
+                                    class="fas fa-tachometer-alt mr-3"></i>Dashboard</a></li>
+                        <li><a href="#" data-content="destinations-content"
+                                class="menu-item flex items-center px-4 py-3"><i
+                                    class="fas fa-map-marker-alt mr-3"></i>Destinations</a></li>
+                        <li><a href="#" data-content="services-content" class="menu-item flex items-center px-4 py-3"><i
+                                    class="fas fa-concierge-bell mr-3"></i>Services</a></li>
+                        <li><a href="#" data-content="bookings-content" class="menu-item flex items-center px-4 py-3"><i
+                                    class="fas fa-calendar-check mr-3"></i>Bookings</a></li>
+                        <li><a href="#" data-content="customers-content"
+                                class="menu-item flex items-center px-4 py-3"><i
+                                    class="fas fa-users mr-3"></i>Customers</a></li>
+                        <li><a href="#" data-content="gallery-content" class="menu-item flex items-center px-4 py-3"><i
+                                    class="fas fa-images mr-3"></i>Gallery</a></li>
+                        <li><a href="#" data-content="testimonials-content"
+                                class="menu-item flex items-center px-4 py-3"><i
+                                    class="fas fa-comment-dots mr-3"></i>Testimonials</a></li>
+                        <li><a href="#" data-content="inquiries-content"
+                                class="menu-item flex items-center px-4 py-3"><i
+                                    class="fas fa-envelope mr-3"></i>Inquiries</a></li>
+                        <li><a href="#" data-content="settings-content" class="menu-item flex items-center px-4 py-3"><i
+                                    class="fas fa-cog mr-3"></i>Settings</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div id="main-content" class="flex-1 ml-64 p-6 transition-all duration-300">
+                <!-- Dashboard Content -->
+                <div id="dashboard-content" class="content-section">
+                    <h1 class="text-3xl font-bold text-white mb-6 fade-in">Dashboard Overview</h1>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="card p-6 rounded-xl shadow-md fade-in">
+                            <h3 class="text-sm font-medium text-gray-600">Total Bookings</h3>
+                            <p class="mt-2 text-3xl font-semibold text-teal-600" id="total-bookings">0</p>
+                        </div>
+                        <div class="card p-6 rounded-xl shadow-md fade-in" style="animation-delay: 0.2s">
+                            <h3 class="text-sm font-medium text-gray-600">Revenue</h3>
+                            <p class="mt-2 text-3xl font-semibold text-orange-600" id="total-revenue">₹0</p>
+                        </div>
+                        <div class="card p-6 rounded-xl shadow-md fade-in" style="animation-delay: 0.4s">
+                            <h3 class="text-sm font-medium text-gray-600">New Customers</h3>
+                            <p class="mt-2 text-3xl font-semibold text-purple-600" id="new-customers">0</p>
+                        </div>
+                        <div class="card p-6 rounded-xl shadow-md fade-in" style="animation-delay: 0.6s">
+                            <h3 class="text-sm font-medium text-gray-600">Pending Inquiries</h3>
+                            <p class="mt-2 text-3xl font-semibold text-red-600" id="pending-inquiries">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destinations Content -->
+                <div id="destinations-content" class="content-section hidden">
+                    <h1 class="text-3xl font-bold text-white mb-6">Destinations Management</h1>
+                    <div class="card p-6 rounded-xl shadow-md mb-6">
+                        <h2 class="text-lg font-semibold mb-4 text-gray-800">Add New Destination</h2>
+                        <form id="destinations-form" class="space-y-4">
+                            <input type="text" id="destination-name" placeholder="Destination Name"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="text" id="destination-desc" placeholder="Description"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="text" id="destination-image" placeholder="Image URL"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="number" id="destination-price" placeholder="Price (₹)"
+                                class="input-field border p-3 rounded-md w-full" min="0">
+                            <button type="submit" class="btn-primary text-white px-4 py-2 rounded-md">Add
+                                Destination</button>
+                        </form>
+                    </div>
+                    <div id="destinations-list" class="card p-6 rounded-xl shadow-md"></div>
+                </div>
+
+                <!-- Services Content -->
+                <div id="services-content" class="content-section hidden">
+                    <h1 class="text-3xl font-bold text-white mb-6">Services Management</h1>
+                    <div class="card p-6 rounded-xl shadow-md mb-6">
+                        <h2 class="text-lg font-semibold mb-4 text-gray-800">Add New Service</h2>
+                        <form id="services-form" class="space-y-4">
+                            <input type="text" id="service-name" placeholder="Service Name"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="text" id="service-desc" placeholder="Description"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="text" id="service-image" placeholder="Image URL"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="number" id="service-price" placeholder="Price (₹)"
+                                class="input-field border p-3 rounded-md w-full" min="0">
+                            <button type="submit" class="btn-primary text-white px-4 py-2 rounded-md">Add
+                                Service</button>
+                        </form>
+                    </div>
+                    <div id="services-list" class="card p-6 rounded-xl shadow-md"></div>
+                </div>
+
+                <!-- Bookings Content -->
+                <div id="bookings-content" class="content-section hidden">
+                    <h1 class="text-3xl font-bold text-white mb-6">Bookings Management</h1>
+                    <div class="card p-6 rounded-xl shadow-md mb-6">
+                        <h2 class="text-lg font-semibold mb-4 text-gray-800">Add New Booking</h2>
+                        <form id="bookings-form" class="space-y-4">
+                            <input type="text" id="booking-customer" placeholder="Customer Name"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="email" id="booking-email" placeholder="Customer Email"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="tel" id="booking-mobile" placeholder="Mobile Number"
+                                class="input-field border p-3 rounded-md w-full">
+                            <textarea id="booking-address" placeholder="Address" rows="3"
+                                class="input-field border p-3 rounded-md w-full"></textarea>
+                            <input type="file" id="booking-image" accept="image/*"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="text" id="booking-details" placeholder="Booking Details"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="number" id="booking-amount" placeholder="Amount (₹)"
+                                class="input-field border p-3 rounded-md w-full" min="0">
+                            <button type="submit" class="btn-primary text-white px-4 py-2 rounded-md">Add
+                                Booking</button>
+                        </form>
+                    </div>
+                    <div id="bookings-list" class="card p-6 rounded-xl shadow-md"></div>
+                </div>
+
+                <!-- Customers, Gallery, Testimonials, Inquiries, Settings -->
+                <div id="customers-content" class="content-section hidden">
+                    <h1 class="text-3xl font-bold text-white mb-6">Customers Management</h1>
+                    <div class="card p-6 rounded-xl shadow-md mb-6">
+                        <h2 class="text-lg font-semibold mb-4 text-gray-800">Add New Customer</h2>
+                        <form id="customers-form" class="space-y-4">
+                            <input type="text" id="customer-name" placeholder="Customer Name"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="email" id="customer-email" placeholder="Email"
+                                class="input-field border p-3 rounded-md w-full">
+                            <button type="submit" class="btn-primary text-white px-4 py-2 rounded-md">Add
+                                Customer</button>
+                        </form>
+                    </div>
+                    <div id="customers-list" class="card p-6 rounded-xl shadow-md"></div>
+                </div>
+
+                <div id="gallery-content" class="content-section hidden">
+                    <h1 class="text-3xl font-bold text-white mb-6">Gallery Management</h1>
+                    <div class="card p-6 rounded-xl shadow-md mb-6">
+                        <h2 class="text-lg font-semibold mb-4 text-gray-800">Add New Image</h2>
+                        <form id="gallery-form" class="space-y-4">
+                            <input type="text" id="image-url" placeholder="Image URL"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="file" id="image-file" accept="image/*"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="text" id="image-caption" placeholder="Caption"
+                                class="input-field border p-3 rounded-md w-full">
+                            <button type="submit" class="btn-primary text-white px-4 py-2 rounded-md">Add Image</button>
+                        </form>
+                    </div>
+                    <div id="gallery-list" class="card p-6 rounded-xl shadow-md grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    </div>
+                </div>
+
+                <div id="testimonials-content" class="content-section hidden">
+                    <h1 class="text-3xl font-bold text-white mb-6">Testimonials Management</h1>
+                    <div class="card p-6 rounded-xl shadow-md mb-6">
+                        <h2 class="text-lg font-semibold mb-4 text-gray-800">Add New Testimonial</h2>
+                        <form id="testimonials-form" class="space-y-4">
+                            <input type="text" id="testimonial-name" placeholder="Customer Name"
+                                class="input-field border p-3 rounded-md w-full">
+                            <textarea id="testimonial-text" placeholder="Testimonial" rows="3"
+                                class="input-field border p-3 rounded-md w-full"></textarea>
+                            <button type="submit" class="btn-primary text-white px-4 py-2 rounded-md">Add
+                                Testimonial</button>
+                        </form>
+                    </div>
+                    <div id="testimonials-list" class="card p-6 rounded-xl shadow-md"></div>
+                </div>
+
+                <div id="inquiries-content" class="content-section hidden">
+                    <h1 class="text-3xl font-bold text-white mb-6">Inquiries Management</h1>
+                    <div class="card p-6 rounded-xl shadow-md mb-6">
+                        <h2 class="text-lg font-semibold mb-4 text-gray-800">Add New Inquiry</h2>
+                        <form id="inquiries-form" class="space-y-4">
+                            <input type="text" id="inquiry-name" placeholder="Name"
+                                class="input-field border p-3 rounded-md w-full">
+                            <input type="email" id="inquiry-email" placeholder="Email"
+                                class="input-field border p-3 rounded-md w-full">
+                            <textarea id="inquiry-message" placeholder="Message" rows="3"
+                                class="input-field border p-3 rounded-md w-full"></textarea>
+                            <button type="submit" class="btn-primary text-white px-4 py-2 rounded-md">Add
+                                Inquiry</button>
+                        </form>
+                    </div>
+                    <div id="inquiries-list" class="card p-6 rounded-xl shadow-md"></div>
+                </div>
+
+                <div id="settings-content" class="content-section hidden">
+                    <h1 class="text-3xl font-bold text-white mb-6">Settings</h1>
+                    <div class="card p-6 rounded-xl shadow-md">
+                        <p class="text-gray-600">Settings management coming soon.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_USERNAME = "admin";
+        const ADMIN_PASSWORD = "chandan123";
+
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('-ml-64');
+            mainContent.classList.toggle('ml-64');
+            mainContent.classList.toggle('ml-0');
+        });
+
+        const profileButton = document.getElementById('profile-menu-button');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        profileButton.addEventListener('click', () => profileDropdown.classList.toggle('hidden'));
+
+        const menuItems = document.querySelectorAll('.menu-item');
+        const contentSections = document.querySelectorAll('.content-section');
+        menuItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                menuItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                const contentId = item.getAttribute('data-content');
+                contentSections.forEach(section => section.classList.add('hidden'));
+                document.getElementById(contentId).classList.remove('hidden');
+                if (contentId === 'inquiries-content') renderInquiries();
+                else if (contentId === 'destinations-content') renderDestinations();
+                else if (contentId === 'services-content') renderServices();
+                else if (contentId === 'bookings-content') renderBookings();
+            });
+        });
+
+        const loginBtn = document.getElementById('login-btn');
+        const loginScreen = document.getElementById('login-screen');
+        const dashboard = document.getElementById('dashboard');
+        const loginError = document.getElementById('login-error');
+        loginBtn.addEventListener('click', () => {
+            const username = document.getElementById('admin-username').value;
+            const password = document.getElementById('admin-password').value;
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                loginScreen.classList.add('hidden');
+                dashboard.classList.remove('hidden');
+                loadAllData();
+            } else {
+                loginError.classList.remove('hidden');
+                setTimeout(() => loginError.classList.add('hidden'), 3000);
+            }
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            dashboard.classList.add('hidden');
+            loginScreen.classList.remove('hidden');
+            document.getElementById('admin-username').value = '';
+            document.getElementById('admin-password').value = '';
+        });
+
+        function loadAllData() {
+            renderDestinations();
+            renderServices();
+            renderBookings();
+            renderCustomers();
+            renderGallery();
+            renderTestimonials();
+            renderInquiries();
+            updateDashboardStats();
+        }
+
+        function updateDashboardStats() {
+            const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+            const customers = JSON.parse(localStorage.getItem('customers')) || [];
+            const inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
+            document.getElementById('total-bookings').textContent = bookings.length;
+            document.getElementById('total-revenue').textContent = `₹${bookings.reduce((sum, b) => sum + (b.amount || 0), 0).toLocaleString()}`;
+            document.getElementById('new-customers').textContent = customers.length;
+            document.getElementById('pending-inquiries').textContent = inquiries.length;
+        }
+
+        document.getElementById('destinations-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('destination-name').value;
+            const desc = document.getElementById('destination-desc').value;
+            const image = document.getElementById('destination-image').value;
+            const price = parseFloat(document.getElementById('destination-price').value || 0);
+            if (!name) return alert('Destination name is required!');
+            const destinations = JSON.parse(localStorage.getItem('destinations')) || [];
+            destinations.push({ id: Date.now(), name, desc, image, price });
+            localStorage.setItem('destinations', JSON.stringify(destinations));
+            document.getElementById('destinations-form').reset();
+            renderDestinations();
+        });
+
+        function renderDestinations() {
+            const destinations = JSON.parse(localStorage.getItem('destinations')) || [];
+            const list = document.getElementById('destinations-list');
+            list.innerHTML = '<h2 class="text-lg font-semibold mb-4 text-gray-800">Destinations List</h2>';
+            destinations.forEach((item, index) => {
+                list.innerHTML += `
+                    <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                        <div class="flex items-center space-x-4">
+                            <img src="${item.image || 'https://via.placeholder.com/150'}" class="w-16 h-16 object-cover rounded-md" onerror="this.src='https://via.placeholder.com/150'">
+                            <div>
+                                <p class="font-semibold text-gray-800">${item.name}</p>
+                                <p class="text-sm text-gray-600">${item.desc}</p>
+                                <p class="text-sm text-teal-600">₹${(item.price || 0).toLocaleString()}</p>
+                            </div>
+                        </div>
+                        <div class="space-x-2">
+                            <button onclick="editDestination(${index})" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteDestination(${index})" class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function editDestination(index) {
+            const destinations = JSON.parse(localStorage.getItem('destinations')) || [];
+            const newName = prompt('Enter new name:', destinations[index].name);
+            const newDesc = prompt('Enter new description:', destinations[index].desc);
+            const newImage = prompt('Enter new image URL:', destinations[index].image);
+            const newPrice = prompt('Enter new price:', destinations[index].price);
+            if (newName && newDesc && newImage && newPrice !== null) {
+                destinations[index] = { ...destinations[index], name: newName, desc: newDesc, image: newImage, price: parseFloat(newPrice) };
+                localStorage.setItem('destinations', JSON.stringify(destinations));
+                renderDestinations();
+            }
+        }
+
+        function deleteDestination(index) {
+            if (confirm('Are you sure you want to delete this destination?')) {
+                const destinations = JSON.parse(localStorage.getItem('destinations')) || [];
+                destinations.splice(index, 1);
+                localStorage.setItem('destinations', JSON.stringify(destinations));
+                renderDestinations();
+            }
+        }
+
+        document.getElementById('services-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('service-name').value;
+            const desc = document.getElementById('service-desc').value;
+            const image = document.getElementById('service-image').value;
+            const price = parseFloat(document.getElementById('service-price').value || 0);
+            if (!name) return alert('Service name is required!');
+            const services = JSON.parse(localStorage.getItem('services')) || [];
+            services.push({ id: Date.now(), name, desc, image, price });
+            localStorage.setItem('services', JSON.stringify(services));
+            document.getElementById('services-form').reset();
+            renderServices();
+        });
+
+        function renderServices() {
+            const services = JSON.parse(localStorage.getItem('services')) || [];
+            const list = document.getElementById('services-list');
+            list.innerHTML = '<h2 class="text-lg font-semibold mb-4 text-gray-800">Services List</h2>';
+            services.forEach((item, index) => {
+                list.innerHTML += `
+                    <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                        <div class="flex items-center space-x-4">
+                            <img src="${item.image || 'https://via.placeholder.com/150'}" class="w-16 h-16 object-cover rounded-md" onerror="this.src='https://via.placeholder.com/150'">
+                            <div>
+                                <p class="font-semibold text-gray-800">${item.name}</p>
+                                <p class="text-sm text-gray-600">${item.desc}</p>
+                                <p class="text-sm text-teal-600">₹${(item.price || 0).toLocaleString()}</p>
+                            </div>
+                        </div>
+                        <div class="space-x-2">
+                            <button onclick="editService(${index})" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteService(${index})" class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function editService(index) {
+            const services = JSON.parse(localStorage.getItem('services')) || [];
+            const newName = prompt('Enter new name:', services[index].name);
+            const newDesc = prompt('Enter new description:', services[index].desc);
+            const newImage = prompt('Enter new image URL:', services[index].image);
+            const newPrice = prompt('Enter new price:', services[index].price);
+            if (newName && newDesc && newImage && newPrice !== null) {
+                services[index] = { ...services[index], name: newName, desc: newDesc, image: newImage, price: parseFloat(newPrice) };
+                localStorage.setItem('services', JSON.stringify(services));
+                renderServices();
+            }
+        }
+
+        function deleteService(index) {
+            if (confirm('Are you sure you want to delete this service?')) {
+                const services = JSON.parse(localStorage.getItem('services')) || [];
+                services.splice(index, 1);
+                localStorage.setItem('services', JSON.stringify(services));
+                renderServices();
+            }
+        }
+
+        document.getElementById('bookings-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const customer = document.getElementById('booking-customer').value;
+            const email = document.getElementById('booking-email').value;
+            const mobile = document.getElementById('booking-mobile').value;
+            const address = document.getElementById('booking-address').value;
+            const imageFile = document.getElementById('booking-image').files[0];
+            const details = document.getElementById('booking-details').value;
+            const amount = parseFloat(document.getElementById('booking-amount').value || 0);
+            if (!customer || !email || !mobile || !address) return alert('Customer name, email, mobile, and address are required!');
+            const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+            const bookingData = { id: Date.now(), customer, email, mobile, address, details, amount };
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    bookingData.image = event.target.result;
+                    bookings.push(bookingData);
+                    localStorage.setItem('bookings', JSON.stringify(bookings));
+                    document.getElementById('bookings-form').reset();
+                    renderBookings();
+                    updateDashboardStats();
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                bookings.push(bookingData);
+                localStorage.setItem('bookings', JSON.stringify(bookings));
+                document.getElementById('bookings-form').reset();
+                renderBookings();
+                updateDashboardStats();
+            }
+        });
+
+        function renderBookings() {
+            const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+            const list = document.getElementById('bookings-list');
+            list.innerHTML = '<h2 class="text-lg font-semibold mb-4 text-gray-800">Bookings List</h2>';
+            bookings.forEach((item, index) => {
+                list.innerHTML += `
+                    <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                        <div class="flex items-center space-x-4">
+                            ${item.image ? `<img src="${item.image}" class="w-16 h-16 object-cover rounded-md" onerror="this.style.display='none'">` : '<div class="w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center"><i class="fas fa-user text-gray-400"></i></div>'}
+                            <div>
+                                <p class="font-semibold text-gray-800">${item.customer}</p>
+                                <p class="text-sm text-gray-600">Email: ${item.email}</p>
+                                <p class="text-sm text-gray-600">Mobile: ${item.mobile}</p>
+                                <p class="text-sm text-gray-600">Address: ${item.address}</p>
+                                <p class="text-sm text-teal-600">${item.details || item.destination + ', ' + item.service + ', ' + item.date} - ₹${(item.amount || 0).toLocaleString()}</p>
+                            </div>
+                        </div>
+                        <div class="space-x-2">
+                            <button onclick="editBooking(${index})" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteBooking(${index})" class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function editBooking(index) {
+            const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+            const newCustomer = prompt('Enter new customer name:', bookings[index].customer);
+            const newEmail = prompt('Enter new email:', bookings[index].email);
+            const newMobile = prompt('Enter new mobile:', bookings[index].mobile);
+            const newAddress = prompt('Enter new address:', bookings[index].address);
+            const newDetails = prompt('Enter new details:', bookings[index].details || bookings[index].destination + ', ' + bookings[index].service + ', ' + bookings[index].date);
+            const newAmount = prompt('Enter new amount:', bookings[index].amount);
+            if (newCustomer && newEmail && newMobile && newAddress && newDetails && newAmount !== null) {
+                bookings[index] = { ...bookings[index], customer: newCustomer, email: newEmail, mobile: newMobile, address: newAddress, details: newDetails, amount: parseFloat(newAmount) };
+                localStorage.setItem('bookings', JSON.stringify(bookings));
+                renderBookings();
+                updateDashboardStats();
+            }
+        }
+
+        function deleteBooking(index) {
+            if (confirm('Are you sure you want to delete this booking?')) {
+                const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+                bookings.splice(index, 1);
+                localStorage.setItem('bookings', JSON.stringify(bookings));
+                renderBookings();
+                updateDashboardStats();
+            }
+        }
+
+        document.getElementById('customers-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('customer-name').value;
+            const email = document.getElementById('customer-email').value;
+            if (!name || !email) return alert('Name and email are required!');
+            const customers = JSON.parse(localStorage.getItem('customers')) || [];
+            customers.push({ id: Date.now(), name, email });
+            localStorage.setItem('customers', JSON.stringify(customers));
+            document.getElementById('customers-form').reset();
+            renderCustomers();
+            updateDashboardStats();
+        });
+
+        function renderCustomers() {
+            const customers = JSON.parse(localStorage.getItem('customers')) || [];
+            const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+            bookings.forEach(booking => {
+                if (booking.customer && booking.email && !customers.some(c => c.email === booking.email)) {
+                    customers.push({ id: Date.now() + Math.random(), name: booking.customer, email: booking.email });
+                }
+            });
+            localStorage.setItem('customers', JSON.stringify(customers));
+            const list = document.getElementById('customers-list');
+            list.innerHTML = '<h2 class="text-lg font-semibold mb-4 text-gray-800">Customers List</h2>';
+            customers.forEach((item, index) => {
+                list.innerHTML += `
+                    <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                        <div>
+                            <p class="font-semibold text-gray-800">${item.name}</p>
+                            <p class="text-sm text-gray-600">${item.email}</p>
+                        </div>
+                        <div class="space-x-2">
+                            <button onclick="editCustomer(${index})" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteCustomer(${index})" class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function editCustomer(index) {
+            const customers = JSON.parse(localStorage.getItem('customers')) || [];
+            const newName = prompt('Enter new name:', customers[index].name);
+            const newEmail = prompt('Enter new email:', customers[index].email);
+            if (newName && newEmail) {
+                customers[index] = { ...customers[index], name: newName, email: newEmail };
+                localStorage.setItem('customers', JSON.stringify(customers));
+                renderCustomers();
+                updateDashboardStats();
+            }
+        }
+
+        function deleteCustomer(index) {
+            if (confirm('Are you sure you want to delete this customer?')) {
+                const customers = JSON.parse(localStorage.getItem('customers')) || [];
+                customers.splice(index, 1);
+                localStorage.setItem('customers', JSON.stringify(customers));
+                renderCustomers();
+                updateDashboardStats();
+            }
+        }
+
+        document.getElementById('gallery-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const url = document.getElementById('image-url').value;
+            const file = document.getElementById('image-file').files[0];
+            const caption = document.getElementById('image-caption').value;
+            const gallery = JSON.parse(localStorage.getItem('gallery')) || [];
+            if (url && file) return alert('Please provide either an image URL or upload a file, not both.');
+            if (!url && !file) return alert('Please provide an image URL or upload a file.');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    gallery.push({ id: Date.now(), url: event.target.result, caption });
+                    localStorage.setItem('gallery', JSON.stringify(gallery));
+                    document.getElementById('gallery-form').reset();
+                    renderGallery();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                gallery.push({ id: Date.now(), url, caption });
+                localStorage.setItem('gallery', JSON.stringify(gallery));
+                document.getElementById('gallery-form').reset();
+                renderGallery();
+            }
+        });
+
+        function renderGallery() {
+            const gallery = JSON.parse(localStorage.getItem('gallery')) || [];
+            const list = document.getElementById('gallery-list');
+            list.innerHTML = '';
+            gallery.forEach((item, index) => {
+                list.innerHTML += `
+                    <div class="relative">
+                        <img src="${item.url}" alt="${item.caption}" class="w-full h-48 object-cover rounded-md">
+                        <p class="text-sm text-gray-600 mt-2">${item.caption}</p>
+                        <div class="absolute top-2 right-2 space-x-2">
+                            <button onclick="editGallery(${index})" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteGallery(${index})" class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function editGallery(index) {
+            const gallery = JSON.parse(localStorage.getItem('gallery')) || [];
+            const newUrl = prompt('Enter new image URL:', gallery[index].url);
+            const newCaption = prompt('Enter new caption:', gallery[index].caption);
+            if (newUrl && newCaption) {
+                gallery[index] = { ...gallery[index], url: newUrl, caption: newCaption };
+                localStorage.setItem('gallery', JSON.stringify(gallery));
+                renderGallery();
+            }
+        }
+
+        function deleteGallery(index) {
+            if (confirm('Are you sure you want to delete this image?')) {
+                const gallery = JSON.parse(localStorage.getItem('gallery')) || [];
+                gallery.splice(index, 1);
+                localStorage.setItem('gallery', JSON.stringify(gallery));
+                renderGallery();
+            }
+        }
+
+        document.getElementById('testimonials-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('testimonial-name').value;
+            const text = document.getElementById('testimonial-text').value;
+            if (!name || !text) return alert('Name and testimonial text are required!');
+            const testimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
+            testimonials.push({ id: Date.now(), name, text });
+            localStorage.setItem('testimonials', JSON.stringify(testimonials));
+            document.getElementById('testimonials-form').reset();
+            renderTestimonials();
+        });
+
+        function renderTestimonials() {
+            const testimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
+            const list = document.getElementById('testimonials-list');
+            list.innerHTML = '<h2 class="text-lg font-semibold mb-4 text-gray-800">Testimonials List</h2>';
+            testimonials.forEach((item, index) => {
+                list.innerHTML += `
+                    <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                        <div>
+                            <p class="font-semibold text-gray-800">${item.name}</p>
+                            <p class="text-sm text-gray-600">${item.text}</p>
+                        </div>
+                        <div class="space-x-2">
+                            <button onclick="editTestimonial(${index})" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteTestimonial(${index})" class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function editTestimonial(index) {
+            const testimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
+            const newName = prompt('Enter new name:', testimonials[index].name);
+            const newText = prompt('Enter new testimonial:', testimonials[index].text);
+            if (newName && newText) {
+                testimonials[index] = { ...testimonials[index], name: newName, text: newText };
+                localStorage.setItem('testimonials', JSON.stringify(testimonials));
+                renderTestimonials();
+            }
+        }
+
+        function deleteTestimonial(index) {
+            if (confirm('Are you sure you want to delete this testimonial?')) {
+                const testimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
+                testimonials.splice(index, 1);
+                localStorage.setItem('testimonials', JSON.stringify(testimonials));
+                renderTestimonials();
+            }
+        }
+
+        document.getElementById('inquiries-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('inquiry-name').value;
+            const email = document.getElementById('inquiry-email').value;
+            const message = document.getElementById('inquiry-message').value;
+            if (!name || !email || !message) return alert('All fields are required!');
+            const inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
+            inquiries.push({ id: Date.now(), name, email, message });
+            localStorage.setItem('inquiries', JSON.stringify(inquiries));
+            document.getElementById('inquiries-form').reset();
+            renderInquiries();
+            updateDashboardStats();
+        });
+
+        function renderInquiries() {
+            const inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
+            const list = document.getElementById('inquiries-list');
+            list.innerHTML = '<h2 class="text-lg font-semibold mb-4 text-gray-800">Inquiries List</h2>';
+            inquiries.forEach((item, index) => {
+                list.innerHTML += `
+                    <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                        <div>
+                            <p class="font-semibold text-gray-800">${item.name}</p>
+                            <p class="text-sm text-gray-600">${item.email}</p>
+                            <p class="text-sm text-gray-600">${item.message}</p>
+                        </div>
+                        <div class="space-x-2">
+                            <button onclick="editInquiry(${index})" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteInquiry(${index})" class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function editInquiry(index) {
+            const inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
+            const newName = prompt('Enter new name:', inquiries[index].name);
+            const newEmail = prompt('Enter new email:', inquiries[index].email);
+            const newMessage = prompt('Enter new message:', inquiries[index].message);
+            if (newName && newEmail && newMessage) {
+                inquiries[index] = { ...inquiries[index], name: newName, email: newEmail, message: newMessage };
+                localStorage.setItem('inquiries', JSON.stringify(inquiries));
+                renderInquiries();
+                updateDashboardStats();
+            }
+        }
+
+        function deleteInquiry(index) {
+            if (confirm('Are you sure you want to delete this inquiry?')) {
+                const inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
+                inquiries.splice(index, 1);
+                localStorage.setItem('inquiries', JSON.stringify(inquiries));
+                renderInquiries();
+                updateDashboardStats();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDestinations();
+            renderServices();
+            renderBookings();
+            renderCustomers();
+            renderGallery();
+            renderTestimonials();
+            renderInquiries();
+        });
+    </script>
+</body>
+
+</html>
